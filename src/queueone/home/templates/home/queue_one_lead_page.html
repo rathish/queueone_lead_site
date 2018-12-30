@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_css %}
+{% endblock extra_css %}
+{% block body_id %}page-top{%endblock%}
+{% block content %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+<header id="home">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav"> <a class="navbar-brand js-scroll-trigger" href="#">{% image page.logo_image height-50 %}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="mr-auto"></div>
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="nav-item active"> <a class="nav-link js-scroll-trigger" href="#">Solution <span class="sr-only">(current)</span></a> </li>
+          <li class="nav-item"> <a class="nav-link js-scroll-trigger" href="#how-it-works">How it works?</a> </li>
+          <li class="nav-item"> <a class="nav-link js-scroll-trigger" href="#industries-segments">Segments</a> </li>
+          <li class="nav-item"> <a class="nav-link js-scroll-trigger" href="#vip-spot-queue">For User</a> </li>
+          <li class="nav-item"> <a class="nav-link js-scroll-trigger" href="#increase-business-conversion">For Partner</a> </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+<div class="main-content">
+  <section id="hero-banner">
+    <div class="container">
+    {% for header in page.get_header_container %}
+      <div class="row">
+        <div class="col-12 col-md-6 pt-0 pl-0 pr-0 pl-md-2 pr-md-2 pt-md-5">{% image header.image width-500 height-500 %}</div>
+        <div class="col-12 col-md-6 text-white">
+          <h3 class="mt-5 text-uppercase">{{ header.content_1 }}</h3>
+          <h1 class="text-uppercase mt-3 font-weight-normal">{{ header.content_2 }}</h1>
+          <h5 class="mt-4 mb-5 font-weight-light">{{ header.content_3 }}</h5>
+          {% for cfp in page.get_call_action_header %}
+          <a href="{{ cfp.url_link }}" class="btn btn-outline-light btn-lg mr-3 pl-4 pr-4 mb-5">{{ cfp.text }} {% image cfp.image width-28 %} </a> 
+          {% endfor %}
+          </div>
+      </div>
+    {% endfor %}
+    </div>
+  </section>
+  <section id="how-it-works" class="pt-5 pb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            {% for workpage in page.get_work_statement %}
+                <h1 class="font-weight-normal mb-0 mb-sm-5">{{ workpage.statement }}</h1>
+            {% endfor %}
+        </div>
+        <div class="col-12">
+          <section class="cd-timeline js-cd-timeline">
+            <div class="cd-timeline__container">
+              {% for timelinepage in page.get_all_work_line %}
+                <div class="cd-timeline__block js-cd-block">
+                    <div class="cd-timeline__img cd-timeline__img--picture js-cd-img"> {% image timelinepage.timeline_image fill-80x80 %}</div>
+                    <div class="cd-timeline__content js-cd-content">
+                        <p>{{ timelinepage.content }}</p>
+                    </div>
+                </div>
+              {% endfor %}
+            </div>
+          </section>
+        </div>
+        <div class="col-12 text-center"> 
+            {% for cfp in page.get_call_action_timeline %}
+                <a href="{{ cfp.url_link }}" class="btn btn-outline-dark btn-lg mr-3 pl-5 pr-5 mt-4 mb-5">{{ cfp.text }} {% image cfp.image width-28 %} </a> 
+            {% endfor %}
+            </div>
+      </div>
+    </div>
+  </section>
+  <section id="industries-segments" class="bg-purple pt-5 pb-5">
+    <div class="container pt-3 pb-3">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="font-weight-normal text-capitalize mb-2">Where all this solution is applicable ?</h1>
+        </div>
+        <div class="col-12 text-center mt-5">
+          <div class="row">
+            {% for page in self.get_segments %}
+             <div class="col-6 col-md-2 mb-sm-0 mb-4">
+                <div class="info-card">
+                <div class="front">
+                  <h5 class="font-weight-normal"><span class="industry-icons">{% image  page.segment_image fill-80x80 %}</span>{{page.title}}</h5>
+                </div>
+                <div class="back">
+                  <h5>{{page.title}}</h5>
+                  {{ page.back_content }}
+                </div>
+              </div>
+             </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="vip-spot-queue" class="pt-5 pb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+           {% for userpage in page.get_user_statement %}
+            <h1 class="font-weight-normal text-capitalize mb-5">{{ userpage.statement }}</h1>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  {% for page in self.get_user_benefits %}
+    {% for block in page.content_block %}
+        <section id="features2" class="features bg-white pt-5">
+                {% include_block block %}
+        </section>
+    {% endfor %}
+{% endfor %}
+
+  <section id="increase-business-conversion" class="pt-5 pb-5 bg-red text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+            {% for partner in page.get_partner_statement %}
+                <h1 class="font-weight-normal ">{{ partner.statement }}</h1>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+{% for page in self.get_partner_benefits %}
+    {% for block in page.content_block %}
+        <section id="features3" class="features bg-white pt-5">
+                {% if block.block_type == 'image' %}
+                    {% image block.value height-250 class="img-fluid" alt="Responsive image" %}
+                {% else %}
+                    {% include_block block %}
+                {% endif %}
+        </section>
+    {% endfor %}
+{% endfor %}
+ 
+  <footer class="footer bg-dark pt-5 pb-5 text-white-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-4 text-md-left text-center order-3 order-sm-1"> Copyright &copy; 2018 Yobny Technology Solutions Pvt. Ltd.<br>All rights reserved </div>
+        <div class="col-12 col-md-4 text-center order-2 order-sm-2 mb-sm-0 mb-2"> 
+        {% for linkp in page.get_footer_links %}
+            | <a href="{{ linkp.url_link }}">{{ linkp.text }}</a> | 
+        {% endfor %}
+        </div>
+        <div class="col-12 col-md-4 text-md-right text-center order-1 order-sm-3 mb-sm-0 mb-3">
+            {% for sicon in page.get_social_media_links %}
+                <a href="{{ sicon.url_link }}">{% image sicon.icon height-40 %}</a>
+            {% endfor %}
+        </div>
+    </div>
+  </footer>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<!-- Optional JavaScript --> 
+<!-- jQuery first, then Popper.js, then Bootstrap JS --> 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> 
+<script src="{% static 'js/timeline.js' %}"></script> 
+<script src="{% static 'js/jquery.easing.js' %}"></script> 
+<script src="{% static 'js/scrolling-nav.js' %}"></script>
+{% endblock %}
+

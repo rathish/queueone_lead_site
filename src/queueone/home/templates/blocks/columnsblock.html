@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}
+<div class="container">
+<div class="row">
+
+  {% for column, width in columns %}
+    {# width is relative to a column grid width, e.g. 12 #}
+    <div class="col-12 col-md-{{ width }} text-center">
+      {{ column  }}
+    </div>
+  {% endfor %}
+</div>
+  </div>

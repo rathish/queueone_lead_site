@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load wagtailcore_tags %}
+{% block extra_css %}
+{% endblock extra_css %}
+{% block body_id %}page-top{%endblock%}
+{% block content %}
+
+{% for block in page.content_block %}
+    <section id="features2" class="features bg-white pt-5">
+                {% include_block block %}
+    </section>
+{% endfor %}
+
+  
+{% endblock %}
+
