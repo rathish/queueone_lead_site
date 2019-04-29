@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_css %}
+{% endblock extra_css %}
+{% block body_id %}page-top{%endblock%}
+{% block content %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+<header id="home">
+</header>
+<div class="main-content">
+  
+    <article>
+        {% for block in page.body %}
+            <section>{% include_block block %}</section>
+        {% endfor %}
+    </article>
+ </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<!-- Optional JavaScript --> 
+<!-- jQuery first, then Popper.js, then Bootstrap JS --> 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> 
+<script src="{% static 'js/timeline.js' %}"></script> 
+<script src="{% static 'js/jquery.easing.js' %}"></script> 
+<script src="{% static 'js/scrolling-nav.js' %}"></script>
+{% endblock %}
+
